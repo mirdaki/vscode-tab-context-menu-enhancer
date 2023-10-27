@@ -1,15 +1,32 @@
 import * as assert from 'assert';
 
-// You can import and use all API from the 'vscode' module
-// as well as import your extension to test it
 import * as vscode from 'vscode';
-// import * as myExtension from '../../extension';
+import * as extension from '../../extension';
 
 suite('Extension Test Suite', () => {
 	vscode.window.showInformationMessage('Start all tests.');
 
-	test('Sample test', () => {
-		assert.strictEqual(-1, [1, 2, 3].indexOf(5));
-		assert.strictEqual(-1, [1, 2, 3].indexOf(0));
+	test('Copy file name command registered', (done) => {
+		vscode.commands.getCommands(true).then(
+			commands => {
+				assert.strictEqual(commands.includes(extension.copyFileNameCommand), true);
+			}
+		);
+		done();
+	});
+
+	test('Check if file name is copied to clipboard', (done) => {
+		const expectedFileName = vscode.window.activeTextEditor?.document.fileName;
+
+		vscode.commands.executeCommand(extension.copyFileNameCommand).then(
+			() => {
+				vscode.env.clipboard.readText().then(
+					clipboardText => {
+						assert.strictEqual(clipboardText, expectedFileName);
+					}
+				);
+			}
+		);
+		done();
 	});
 });
