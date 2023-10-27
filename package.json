@@ -14,14 +14,14 @@
 	"contributes": {
 		"commands": [
 			{
-				"command": "tab-context-menu-enhancer.copy",
+				"command": "tab-context-menu-enhancer.copy-file-name",
 				"title": "Copy File Name"
 			}
 		],
 		"menus": {
 			"editor/title/context": [
 				{
-					"command": "tab-context-menu-enhancer.copy",
+					"command": "tab-context-menu-enhancer.copy-file-name",
 					"group": "tab-context-menu-enhancer"
 				}
 			]
