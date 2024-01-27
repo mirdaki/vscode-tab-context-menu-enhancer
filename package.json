@@ -15,7 +15,7 @@
 		"commands": [
 			{
 				"command": "tab-context-menu-enhancer.copy-file-name",
-				"title": "Copy File Name"
+				"title": "Copy Active File Name"
 			}
 		],
 		"menus": {
