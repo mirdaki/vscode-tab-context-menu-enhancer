@@ -29,4 +29,31 @@ suite('Extension Test Suite', () => {
 		);
 		done();
 	});
+
+	test('Check if file name is copied to clipboard from non-focused tab', (done) => {
+		const expectedFileName = vscode.window.activeTextEditor?.document.fileName;
+
+		// Open a new text document
+		vscode.workspace.openTextDocument({ content: 'test' }).then(
+			document => {
+				// Create a new editor for the document
+				vscode.window.showTextDocument(document).then(
+					editor => {
+						// Execute the "Copy File Name" command
+						vscode.commands.executeCommand(extension.copyFileNameCommand).then(
+							() => {
+								// Check that the clipboard contains the expected file name
+								vscode.env.clipboard.readText().then(
+									clipboardText => {
+										assert.strictEqual(clipboardText, expectedFileName);
+									}
+								);
+							}
+						);
+					}
+				);
+			}
+		);
+		done();
+	});
 });
