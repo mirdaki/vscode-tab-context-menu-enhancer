@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import * as path from 'path';
 
 export const copyFileNameCommand = 'tab-context-menu-enhancer.copy-file-name';
 
@@ -8,8 +9,9 @@ export function activate(context: vscode.ExtensionContext) {
 	let copyNameDisposable = vscode.commands.registerCommand(copyFileNameCommand, () => {
 		const activeEditor = vscode.window.activeTextEditor;
 		if (activeEditor) {
-			const tabLabel = activeEditor.document.fileName;
-			vscode.env.clipboard.writeText(tabLabel).then(() => {
+			const fullPath = activeEditor.document.fileName;
+			const fileName = path.basename(fullPath);
+			vscode.env.clipboard.writeText(fileName).then(() => {
 				vscode.window.showInformationMessage(`Copied file name to clipboard`);
 			});
 		}
